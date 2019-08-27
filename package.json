@@ -1,0 +1,19 @@
+{
+  "name": "fpay-server",
+  "version": "1.0.0",
+  "description": "Backend server for fpay platform",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fpay-org/fpay-server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/fpay-org/fpay-server/issues"
+  },
+  "homepage": "https://github.com/fpay-org/fpay-server#readme"
+}
