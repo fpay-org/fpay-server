@@ -19,7 +19,6 @@ router.post("/issue/", (req, res, next) => {
     message: "Handling POST",
     success: fine
   });
-  console.log(req.body);
 });
 
 /* /fines/:id - return single fine */
