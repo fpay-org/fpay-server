@@ -5,12 +5,12 @@ const bodyParser = require("body-parser");
 /* Import routes */
 const fineRoutes = require("./api/routes/fines");
 
-/* Use imported routes in the app */
-app.use("/fines", fineRoutes);
-
 /* Middleware */
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+
+/* Use imported routes in the app */
+app.use("/fines", fineRoutes);
 
 /* Handle invalid routes */
 app.use((req, res, next) => {
