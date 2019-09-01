@@ -1,10 +1,17 @@
 const express = require("express");
 const app = express();
-const cors = require('cors');
+const cors = require("cors");
 const bodyParser = require("body-parser");
+const mongoose = require("mongoose");
 
 /* Import routes */
 const fineRoutes = require("./api/routes/fines");
+
+/* Connect db */
+mongoose.connect(
+  "mongodb+srv://server:fpaydb@cluster0-wedr9.gcp.mongodb.net/test?retryWrites=true&w=majority",
+  { useNewUrlParser: true }
+);
 
 /* Middleware */
 app.use(cors());
