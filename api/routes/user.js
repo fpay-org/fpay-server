@@ -47,4 +47,31 @@ router.post("/register", (req, res, next) => {
     });
 });
 
+router.delete("/remove/:userId", (req, res, next) => {
+  User.find({ _id: req.params.userId })
+    .exec()
+    .then(user => {
+      if (user.length >= 1) {
+        User.deleteOne({ _id: req.params.userId })
+          .exec()
+          .then(result => {
+            res.status(200).json({
+              message: "User deleted"
+            });
+          })
+          .catch(err => {
+            console.log(err);
+            res.status(500).json({
+              error: err
+            });
+          });
+      } else {
+        //TODO: Validate the response code
+        return res.status(500).json({
+          message: "User doesn't exists"
+        });
+      }
+    });
+});
+
 module.exports = router;
