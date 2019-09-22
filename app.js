@@ -6,6 +6,7 @@ const mongoose = require("mongoose");
 
 /* Import routes */
 const fineRoutes = require("./api/routes/fines");
+const userRoutes = require("./api/routes/user");
 
 /* Connect db */
 mongoose.connect(
@@ -20,6 +21,7 @@ app.use(bodyParser.json());
 
 /* Use imported routes in the app */
 app.use("/fines", fineRoutes);
+app.use("/user", userRoutes);
 
 /* Handle invalid routes */
 app.use((req, res, next) => {
