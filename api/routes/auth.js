@@ -4,6 +4,8 @@ const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
+const data = require("../config/data");
+
 const Logger = require("../utils/logger");
 const logger = new Logger();
 
@@ -79,9 +81,10 @@ router.post("/officer/login", (req, res, next) => {
           {
             id: officer[0]._id,
             officerID: officer[0].officerID,
-            first_name: officer[0].first_name
+            first_name: officer[0].first_name,
+            role: 1
           },
-          "fpaysecret",
+          data.JWT_SECRET,
           {
             expiresIn: "1h"
           }
@@ -163,9 +166,10 @@ router.post("/driver/login", (req, res, next) => {
           {
             id: driver[0]._id,
             username: driver[0].username,
-            first_name: driver[0].first_name
+            first_name: driver[0].first_name,
+            role: 0
           },
-          "fpaysecret",
+          data.JWT_SECRET,
           {
             expiresIn: "1h"
           }
