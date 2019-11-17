@@ -17,11 +17,11 @@ const driverSchema = mongoose.Schema({
     required: false
   },
   fines: {
-    type: Fine[{}],
+    type: Array,
     required: true
   },
   vehicles: {
-    type: Vehicle[{}],
+    type: Array,
     required: true
   },
   email: {
@@ -30,7 +30,7 @@ const driverSchema = mongoose.Schema({
     match: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
   },
   contact_number: {
-    type: number,
+    type: Number,
     required: true
   }
 });

@@ -1,7 +1,5 @@
 const mongoose = require("mongoose");
 
-const Fine = require("./fine");
-
 const officerSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   officerID: { type: String, required: true },
@@ -23,7 +21,7 @@ const officerSchema = mongoose.Schema({
     required: true
   },
   fines_issued: {
-    type: Fine[{}],
+    type: Array,
     required: true
   }
 });
