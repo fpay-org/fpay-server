@@ -9,9 +9,13 @@ const response = require("./api/utils/response");
 
 /* Import routes */
 const authRoutes = require("./api/routes/auth");
+const meRoutes = require("./api/routes/me");
 
 /* Connect db */
-mongoose.connect(data.mongo_db, { useNewUrlParser: true });
+mongoose.connect(
+  "mongodb+srv://server:fpaydb@cluster0-wedr9.gcp.mongodb.net/test?retryWrites=true&w=majority",
+  { useNewUrlParser: true }
+);
 
 /* Middleware */
 app.use(cors());
@@ -20,6 +24,7 @@ app.use(bodyParser.json());
 
 /* Use imported routes in the app */
 app.use("/auth", authRoutes);
+app.use("/me", meRoutes);
 
 /* Handle invalid routes */
 app.use((req, res, next) => {
