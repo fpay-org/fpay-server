@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "format:safe": "prettier --check ./app.js ./server.js ./api/models/** ./api/routes/**",
-    "format": "prettier --write ./app.js ./server.js ./api/models/** ./api/routes/**"
+    "format:safe": "prettier --check ./app.js ./server.js ./api/models/** ./api/routes/** ./api/config/** ./api/utils/**",
+    "format": "prettier --write ./app.js ./server.js ./api/models/** ./api/routes/** ./api/config/** ./api/utils/**"
   },
   "repository": {
     "type": "git",
