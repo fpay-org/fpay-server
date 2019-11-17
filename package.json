@@ -4,7 +4,9 @@
   "description": "Backend server for fpay platform",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "format:safe": "prettier --check ./app.js ./server.js ./api/models/** ./api/routes/** ./api/config/** ./api/utils/**",
+    "format": "prettier --write ./app.js ./server.js ./api/models/** ./api/routes/** ./api/config/** ./api/utils/**"
   },
   "repository": {
     "type": "git",
@@ -23,5 +25,8 @@
     "express": "^4.17.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.6.11"
+  },
+  "devDependencies": {
+    "prettier": "1.19.1"
   }
 }
