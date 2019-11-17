@@ -4,15 +4,14 @@ const cors = require("cors");
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
 
+const data = require("./api/config/data");
+const response = require("./api/utils/response");
+
 /* Import routes */
-const fineRoutes = require("./api/routes/fines");
-const userRoutes = require("./api/routes/user");
+const authRoutes = require("./api/routes/auth");
 
 /* Connect db */
-mongoose.connect(
-  "mongodb+srv://server:fpaydb@cluster0-wedr9.gcp.mongodb.net/test?retryWrites=true&w=majority",
-  { useNewUrlParser: true }
-);
+mongoose.connect(data.mongo_db, { useNewUrlParser: true });
 
 /* Middleware */
 app.use(cors());
@@ -20,8 +19,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
 /* Use imported routes in the app */
-app.use("/fines", fineRoutes);
-app.use("/user", userRoutes);
+app.use("/auth", authRoutes);
 
 /* Handle invalid routes */
 app.use((req, res, next) => {
@@ -32,12 +30,7 @@ app.use((req, res, next) => {
 
 /* Catch invalid router errors */
 app.use((error, req, res, next) => {
-  res.status(error.status || 500);
-  res.json({
-    error: {
-      message: error.message
-    }
-  });
+  response(res, error.status || 500, error.message);
 });
 
 /* Export module */
