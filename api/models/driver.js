@@ -1,8 +1,5 @@
 const mongoose = require("mongoose");
 
-const Fine = require("./fine");
-const Vehicle = require("./vehicle");
-
 const driverSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   username: { type: String, required: true },

@@ -1,15 +1,13 @@
 const mongoose = require("mongoose");
 
-const VehicleType = require("../interfaces/vehicle-type");
-
 const vehicleSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  type: { type: VehicleType, required: true },
+  type: { type: String, required: true },
   name: { type: String, required: false },
+  reg_number: { type: Number, required: false },
   current_owner: { type: String, required: true },
   previous_owners: { type: Array, required: true },
-  fines: { type: Array, required: true },
-  total_accidents: { type: Number, required: false }
+  fines: { type: Array, required: true }
 });
 
 module.exports = mongoose.model("Vehicle", vehicleSchema);

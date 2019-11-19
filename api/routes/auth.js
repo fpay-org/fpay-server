@@ -15,6 +15,13 @@ const response = require("../utils/response");
 
 const Officer = require("../models/officer");
 
+/**
+ * Return new user token
+ * @param {string} officerID: new officer's ID
+ * @param {string} password: new officer's password
+ * @return {string} 201: Token
+ */
+
 router.post("/officer/register", (req, res, next) => {
   Officer.find({ officerID: req.body.officerID })
     .exec()
@@ -42,18 +49,18 @@ router.post("/officer/register", (req, res, next) => {
             .save()
             .then(result => {
               logger.info("Officer created", result);
-              response(res, 201, "Officer created");
+              return response(res, 201, "Officer created");
             })
             .catch(error => {
               logger.error(error);
-              response(res, 500, error);
+              return response(res, 500, error);
             });
         }
       });
     })
     .catch(err => {
       logger.error(err);
-      response(res, 500, err);
+      return response(res, 500, err);
     });
 });
 
@@ -133,18 +140,18 @@ router.post("/driver/register", (req, res, next) => {
             .save()
             .then(result => {
               logger.info("Driver created", result);
-              response(res, 201, "Driver created");
+              return response(res, 201, "Driver created");
             })
             .catch(error => {
               logger.error(error);
-              response(res, 500, error);
+              return response(res, 500, error);
             });
         }
       });
     })
     .catch(err => {
       logger.error(err);
-      response(res, 500, err);
+      return response(res, 500, err);
     });
 });
 
