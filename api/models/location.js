@@ -6,7 +6,8 @@ const locationSchema = mongoose.Schema({
   longitude: { type: String, required: true },
   latitude: { type: String, required: true },
   fines: { type: Array, required: true },
-  total_fines: { type: Number, required: false }
+  total_fines: { type: Number, required: false },
+  currency: { type: String, required: true, default: "lkr" }
 });
 
 module.exports = mongoose.model("Location", locationSchema);

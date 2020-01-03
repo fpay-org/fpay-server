@@ -2,11 +2,14 @@ const mongoose = require("mongoose");
 
 const vehicleSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  type: { type: String, required: true },
-  name: { type: String, required: false },
-  reg_number: { type: Number, required: false },
-  current_owner: { type: String, required: true },
-  previous_owners: { type: Array, required: true },
+  license_number: { type: String, required: true },
+  type: { type: mongoose.Types.ObjectId, ref: "VehicleType", required: true },
+  current_owner: {
+    type: mongoose.Types.ObjectId,
+    ref: "Driver",
+    required: true
+  },
+  previous_owners: { type: Array, required: false },
   fines: { type: Array, required: true }
 });
 
