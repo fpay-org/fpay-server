@@ -2,16 +2,14 @@ const mongoose = require("mongoose");
 
 const driverSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  username: { type: String, required: true },
-
+  nid: { type: String, required: true },
   password: { type: String, required: true },
   first_name: {
     type: String,
     required: true
   },
   last_name: {
-    type: String,
-    required: false
+    type: String
   },
   fines: {
     type: Array,
@@ -21,15 +19,14 @@ const driverSchema = mongoose.Schema({
     type: Array,
     required: true
   },
-  email: {
-    type: String,
-    required: true,
-    match: /^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/
-  },
   contact_number: {
-    type: Number,
+    type: String,
     required: true
-  }
+  },
+  avatar_url: {
+    type: String
+  },
+  license_number: { type: String, required: true }
 });
 
 module.exports = mongoose.model("Driver", driverSchema);

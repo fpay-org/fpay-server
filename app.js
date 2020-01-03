@@ -8,27 +8,24 @@ const data = require("./api/config/data");
 const response = require("./api/utils/response");
 
 /* Import routes */
-const authRoutes = require("./api/routes/auth");
-const meRoutes = require("./api/routes/me");
-const fineRoutes = require("./api/routes/fines.dev");
-
+const routes = require("./api/routes");
 /* Connect db */
 mongoose
   .connect(
     "mongodb+srv://server:fpaydb@cluster0-wedr9.gcp.mongodb.net/test?retryWrites=true&w=majority",
-    { useNewUrlParser: true }
+    { useNewUrlParser: true, useUnifiedTopology: true }
   )
-  .catch(err => response(res, 500, err));
+  .catch(err => response(res, null, 500, err));
 
 /* Middleware */
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 
-/* Use imported routes in the app */
-app.use("/auth", authRoutes);
-app.use("/me", meRoutes);
-app.use("/fines", fineRoutes);
+/* Import routes */
+app.use("/v1", routes);
+
+app.use("/", (req, res) => res.redirect("/v1"));
 
 /* Handle invalid routes */
 app.use((req, res, next) => {
@@ -39,7 +36,7 @@ app.use((req, res, next) => {
 
 /* Catch invalid router errors */
 app.use((error, req, res, next) => {
-  response(res, error.status || 500, error.message);
+  response(res, null, error.status || 500, error.message);
 });
 
 /* Export module */
