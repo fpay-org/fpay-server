@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const officerSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  officerID: { type: String, required: true },
+  officer_id: { type: String, required: true },
   password: { type: String, required: true },
   first_name: {
     type: String,
@@ -23,6 +23,16 @@ const officerSchema = mongoose.Schema({
   fines_issued: {
     type: Array,
     required: true
+  },
+  contact_number: {
+    type: String
+  },
+  avatar_url: {
+    type: String
+  },
+  registered_at: {
+    type: Date,
+    default: Date.now
   }
 });
 
