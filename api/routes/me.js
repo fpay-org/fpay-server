@@ -3,6 +3,6 @@ const router = express.Router();
 
 const handler = require("../handlers/me");
 
-router.get("/me", handler.get);
+router.get("/", handler.get);
 
 module.exports = router;
