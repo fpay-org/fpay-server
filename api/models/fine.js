@@ -26,7 +26,7 @@ const fineSchema = mongoose.Schema({
     default: Date.now,
     required: true
   },
-  is_payed: {
+  is_paid: {
     type: Boolean,
     default: false
   }
