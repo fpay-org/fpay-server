@@ -31,7 +31,7 @@ exports.create = async (req, res) => {
     .then(officer => officer._id)
     .catch(err => response(res, null, 500, err));
 
-  const driver_id = await Driver.findOne({ nid: req.beody.driver_nid })
+  const driver_id = await Driver.findOne({ nid: req.body.driver_nid })
     .exec()
     .then(driver => driver._id)
     .catch(err => response(res, null, 500, err));
