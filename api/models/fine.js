@@ -13,11 +13,11 @@ const fineSchema = mongoose.Schema({
     required: true
   },
   location: {
-    _id: { type: mongoose.Types.ObjectId, ref: "Location", required: true },
+    name: { type: String, required: true },
     longitude: { type: String, required: true },
     latitude: { type: String, required: true }
   },
-  vehicle: { type: mongoose.Types.ObjectId, ref: "Vehicle", required: true },
+  vehicle: { type: String, required: true },
   image_url: {
     type: String
   },
