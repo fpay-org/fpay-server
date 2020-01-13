@@ -78,6 +78,8 @@ exports.upload = async (req, res) => {
 };
 
 exports.uploadWithData = async (req, res) => {
+  logger.info("File:", req.file, "\nBody:", req.body);
+
   storage.storeFile("fine_instances", req.file, async (err, url) => {
     if (err) response(res, null, 500, err);
 
