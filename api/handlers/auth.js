@@ -3,7 +3,7 @@ const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const storage = require('../services/storage')
+const storage = require("../services/storage");
 
 const data = require("../config/data");
 
@@ -44,8 +44,10 @@ exports.officerReg = async (req, res, next) => {
             role: req.body.role,
             permission_level: req.body.permission_level,
             fines_issued: req.body.fines_issued,
-            contact_number: req.body.contact_number
-
+            contact_number: req.body.contact_number,
+            police_station: req.body.police_station,
+            email: req.body.email,
+            nic: req.body.nic
             // Write image upload
           });
 
@@ -126,7 +128,7 @@ exports.officerRegWithImage = async (req, res) => {
 
     response(res, url, 201);
   });
-}
+};
 
 /* Driver authentication */
 

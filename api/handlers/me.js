@@ -18,7 +18,10 @@ exports.get = async (req, res, next) => {
     Driver.findById(token.id)
       .exec()
       .then(driver => {
-        return response(res, driver);
+        if (!!driver) {
+          driver.password = "fpay-encrypted";
+          return response(res, driver);
+        }
       })
       .catch(err => {
         logger.error(err);
@@ -30,12 +33,14 @@ exports.get = async (req, res, next) => {
     Officer.findById(token.id)
       .exec()
       .then(officer => {
-        return response(res, officer);
+        if (!!officer) {
+          officer.password = "fpay-encrypted";
+          return response(res, officer);
+        }
       })
       .catch(err => {
         logger.error(err);
         return response(res, null, 500, err);
       });
   }
-}
-
+};

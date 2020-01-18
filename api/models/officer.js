@@ -27,6 +27,15 @@ const officerSchema = mongoose.Schema({
   contact_number: {
     type: String
   },
+  police_station: {
+    type: String
+  },
+  email: {
+    type: String
+  },
+  nic: {
+    type: String
+  },
   avatar_url: {
     type: String
   },
