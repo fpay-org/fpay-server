@@ -1,10 +1,16 @@
-const mongoose = require("mongoose");
 const Officer = require("../models/officer");
 const bcrypt = require("bcrypt");
 
 const response = require("../utils/response");
 const Logger = require("../utils/logger");
 const logger = new Logger();
+
+exports.getAll = async (req, res) => {
+  Officer.find()
+    .exec()
+    .then(officers => response(res, officers))
+    .catch(err => response(res, null, 500, err));
+};
 
 exports.update = async (req, res) => {
   if (req && req.params && req.params.officer_id) {
