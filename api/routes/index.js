@@ -4,13 +4,17 @@ const router = express.Router();
 const authRoutes = require("./auth");
 const meRoutes = require("./me");
 const fineRoutes = require("./fines");
+const driverRoutes = require("./driver");
+const officerRoutes = require("./officer");
 
 router.use("/auth", authRoutes);
 router.use("/me", meRoutes);
 router.use("/fines", fineRoutes);
+router.use("/driver", driverRoutes);
+router.use("/officer", officerRoutes);
 
 router.get("/", (req, res) => {
-  res.sendFile("./api/views/index.html");
+  res.sendFile(`__dirname/../views/index.html`);
 });
 
 module.exports = router;
