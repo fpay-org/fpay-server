@@ -31,4 +31,4 @@ const dashSchema = mongoose.Schema({
   
 });
 
-module.exports = mongoose.model("Dashboard", driverSchema);
+module.exports = mongoose.model("Dashboard", dashSchema);
