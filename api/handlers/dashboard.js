@@ -4,7 +4,7 @@ const multer = require("multer");
 const uuid = require("uuid");
 
 const Fine = require("../models/fine");
-const dashboard = require("../models/dashboard");
+const Dashboard = require("../models/dashboard");
 const Driver = require("../models/driver");
 const Vehicle = require("../models/vehicle");
 const Officer = require("../models/officer");
@@ -16,7 +16,7 @@ const logger = new Logger();
 
 // Should paginate
 exports.getAll = async (req, res) => {
-  Fine.find()
+  Dashboard.find()
     .exec()
     .then(dashboard => response(res, dashboard))
     .catch(err => response(res, null, 500, err));
