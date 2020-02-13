@@ -4,6 +4,7 @@ const multer = require("multer");
 const uuid = require("uuid");
 
 const Fine = require("../models/fine");
+const dashboard = require("../models/dashboard");
 const Driver = require("../models/driver");
 const Vehicle = require("../models/vehicle");
 const Officer = require("../models/officer");
@@ -45,28 +46,74 @@ exports.getAll = async (req, res) => {
 
 //   const penalties = req.body.penalties.map(penalty => penalty.toString());
 
-//   const fine = new Fine({
-//     _id: new mongoose.Types.ObjectId(),
-//     total_value: req.body.total_value,
-//     currency: req.body.currency,
-//     penalties: penalties,
-//     driver: driver_id,
-//     officer: officer_id,
-//     secondary_officer: secondary_officer_id,
-//     location: req.body.location,
-//     vehicle: req.body.vehicle_license_number,
-//     image_url: req.body.officer_avatar_url,
-//     issued_at: Date.now()
-//   });
 
-//   fine
-//     .save()
-//     .then(fine => {
-//       logger.info("Fine issued", fine);
-//       response(res, null, 201);
-//     })
-//     .catch(err => response(res, null, 500, err));
-// };
+
+
+exports.officerPost = async (req, res) => {
+  logger.info("File:", req.file, "\nBody:", req.body);
+
+  // storage.storeFile("fine_instances", req.file, async (err, url) => {
+  //   if (err) response(res, null, 500, err);
+
+  const officer_id = await Officer.findOne({ officer_id: req.body.officer })
+    .exec()
+    .then(officer => officer._id)
+    .catch(err => response(res, null, 500, err));
+
+  const f_name = await Officer.findOne({ officer_id: req.body.officer })
+    .exec()
+    .then(officer => officer.first_name)
+    .catch(err => response(res, null, 500, err));
+
+  const l_name = await Officer.findOne({ officer_id: req.body.officer })
+    .exec()
+    .then(officer => officer.last_name)
+    .catch(err => response(res, null, 500, err));
+
+  // const secondary_officer_id = await Officer.findOne({
+  //   officer_id: req.body.secondary_officer
+  // })
+  //   .exec()
+  //   .then(officer => officer._id)
+  //   .catch(err => response(res, null, 500, err));
+
+  // const driver_id = await Driver.findOne({ nid: req.body.driver_nid })
+  //   .exec()
+  //   .then(driver => driver._id)
+  //   .catch(err => response(res, null, 500, err));
+
+  // Schedule location
+
+  // Schedule vehicles
+
+  // const penalties = req.body.penalties
+  //   .split(",")
+  //   .map(penalty => penalty.toString());
+
+  const dashboard = new Dashboard({
+    _id: new mongoose.Types.ObjectId(),
+    titile: req.body.title,
+    first_name: f_name,
+    last_name: l_name,
+    content: req.body.content,
+    officer: officer_id,
+    location: req.body.location,
+    image_url: req.body.officer_avatar_url,
+    posted_at: Date.now(),
+    isVerified: false,
+  });
+
+
+  dashboard
+    .save()
+    .then(dashboard => {
+      logger.info("Post posted", dashboard);
+      response(res, null, 201);
+    })
+    .catch(err => response(res, null, 500, err));
+};
+
+
 
 // exports.upload = async (req, res) => {
 //   console.log(req.body);
