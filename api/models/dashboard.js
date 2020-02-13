@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const dashSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
-  post_id: { type: String, required: true },
+  title: { type: String, required: true },
   first_name: {
     type: String,
     required: true
@@ -28,6 +28,10 @@ const dashSchema = mongoose.Schema({
   image_url: {
     type: String
   },
+  isVerified:{
+    type:Boolean,
+    default:false,    
+  }
   
 });
 
