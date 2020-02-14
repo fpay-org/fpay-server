@@ -16,7 +16,7 @@ const logger = new Logger();
 
 // Should paginate
 exports.getAll = async (req, res) => {
-  Dashboards.find()
+  Dashboard.find()
     .exec()
     .then(posts => response(res, posts))
     .catch(err => response(res, null, 500, err));
