@@ -29,8 +29,8 @@ exports.update = async (req, res) => {
 
             Officer.updateOne({ officer_id: req.params.officer_id }, updateDoc)
               .exec()
-              .then(res => {
-                if (res) {
+              .then(result => {
+                if (result) {
                   response(res, null, 202, "User updated");
                 }
               })
