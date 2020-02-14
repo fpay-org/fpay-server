@@ -60,12 +60,12 @@ exports.officerPost = async (req, res) => {
     .then(officer => officer._id)
     .catch(err => response(res, null, 500, err));
 
-  const f_name = await Officer.findOne({ officer_id: req.body.officer })
+  const first_name = await Officer.findOne({ officer_id: req.body.officer })
     .exec()
     .then(officer => officer.first_name)
     .catch(err => response(res, null, 500, err));
 
-  const l_name = await Officer.findOne({ officer_id: req.body.officer })
+  const last_name = await Officer.findOne({ officer_id: req.body.officer })
     .exec()
     .then(officer => officer.last_name)
     .catch(err => response(res, null, 500, err));
@@ -93,8 +93,8 @@ exports.officerPost = async (req, res) => {
   const dashboard = new Dashboard({
     _id: new mongoose.Types.ObjectId(),
     title: req.body.title,
-    first_name: req.body.first_name,
-    last_name: req.body.last_name,
+    first_name: first_name,
+    last_name: last_name,
     content: req.body.content,
     officer: officer_id,
     location: req.body.location,
