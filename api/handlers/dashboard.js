@@ -93,12 +93,12 @@ exports.officerPost = async (req, res) => {
   const dashboard = new Dashboard({
     _id: new mongoose.Types.ObjectId(),
     titile: req.body.title,
-    first_name: f_name,
-    last_name: l_name,
+    first_name: first_name,
+    last_name: last_name,
     content: req.body.content,
     officer: officer_id,
     location: req.body.location,
-    image_url: req.body.officer_avatar_url,
+    image_url: req.body.image_url,
     posted_at: Date.now(),
     isVerified: false,
   });
