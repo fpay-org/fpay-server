@@ -18,7 +18,7 @@ const logger = new Logger();
 exports.getAll = async (req, res) => {
   Dashboard.find()
     .exec()
-    .then(dashboard => response(res, dashboard))
+    .then(posts => response(res, posts))
     .catch(err => response(res, null, 500, err));
 };
 
