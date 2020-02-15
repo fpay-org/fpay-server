@@ -131,7 +131,7 @@ exports.passUpdate = async (req, res) => {
            
           });      
         }});
-      }}
+      }};
       //       Officer.updateOne({ officer_id: req.params.officer_id }, updateDoc)
       //         .exec()
       //         .then(result => {
