@@ -99,7 +99,7 @@ exports.officerLogin = async (req, res, next) => {
           },
           data.JWT_SECRET,
           {
-            expiresIn: "1h"
+            //expiresIn: "1h"
           }
         );
 
@@ -201,7 +201,7 @@ exports.driverLogin = async (req, res, next) => {
           },
           data.JWT_SECRET,
           {
-            expiresIn: "1h"
+            //expiresIn: "1h"
           }
         );
 
