@@ -286,8 +286,6 @@ exports.forgetPassword = async (req, res) => {
               expiresIn: "1h"
             }
           );
-
-          
         } else {
           response(res, null, 404, "Invalid driver id");
         }
