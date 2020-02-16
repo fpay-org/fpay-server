@@ -35,5 +35,6 @@ router.post(
   upload.single("driver_image"),
   handler.driverRegWithImage
 );
+router.get("/driver/forgetPassword/:nid", handler.forgetPassword);
 
 module.exports = router;

@@ -1,5 +1,4 @@
 const express = require("express");
-const router = express.Router();
 const mongoose = require("mongoose");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
@@ -270,4 +269,29 @@ exports.driverRegWithImage = async (req, res) => {
         return response(res, null, 500, err);
       });
   });
+};
+
+exports.forgetPassword = async (req, res) => {
+  if (req && req.params && req.params.nid) {
+    Driver.findOne({ nid: req.params.nid })
+      .exec()
+      .then(driver => {
+        if (!!driver) {
+          const token = jwt.sign(
+            {
+              id: driver._id
+            },
+            data.JWT_SECRET,
+            {
+              expiresIn: "1h"
+            }
+          );
+
+          
+        } else {
+          response(res, null, 404, "Invalid driver id");
+        }
+      })
+      .catch();
+  }
 };
