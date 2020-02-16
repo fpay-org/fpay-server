@@ -11,9 +11,8 @@ const upload = multer({
 
 const handler = require("../handlers/dashboard");
 
-
 router.get("/", handler.getAll);
-router.post("/post",handler.officerPost);
+router.post("/post", handler.officerPost);
 
 // router.get("/officer/login", handler.officerLogin);
 // router.get("/driver/login", handler.driverLogin);
