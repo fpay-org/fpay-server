@@ -12,6 +12,23 @@ exports.getAll = async (req, res) => {
     .catch(err => response(res, null, 500, err));
 };
 
+exports.getOne = async (req, res) => {
+  logger.info("Req ");
+  if (req && req.params && req.params.officer_id) {
+    Officer.findOne({ officer_id: req.params.officer_id })
+      .exec()
+      .then(officer => {
+        if (!!officer) {
+          officer.password = "fpay-encrypted";
+          return response(res, officer);
+        } else response(res, null, 404, "Invalid driver id");
+      })
+      .catch(err => response(res, null, 500, err));
+  } else {
+    response(res, null, 404, "No driver id found");
+  }
+};
+
 exports.update = async (req, res) => {
   if (req && req.params && req.params.officer_id) {
     logger.info("Update request for", req.params.officer_id);
