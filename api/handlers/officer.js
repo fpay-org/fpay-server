@@ -1,10 +1,33 @@
-const mongoose = require("mongoose");
 const Officer = require("../models/officer");
 const bcrypt = require("bcrypt");
 
 const response = require("../utils/response");
 const Logger = require("../utils/logger");
 const logger = new Logger();
+
+exports.getAll = async (req, res) => {
+  Officer.find()
+    .exec()
+    .then(officers => response(res, officers))
+    .catch(err => response(res, null, 500, err));
+};
+
+exports.getOne = async (req, res) => {
+  logger.info("Req ");
+  if (req && req.params && req.params.officer_id) {
+    Officer.findOne({ officer_id: req.params.officer_id })
+      .exec()
+      .then(officer => {
+        if (!!officer) {
+          officer.password = "fpay-encrypted";
+          return response(res, officer);
+        } else response(res, null, 404, "Invalid driver id");
+      })
+      .catch(err => response(res, null, 500, err));
+  } else {
+    response(res, null, 404, "No driver id found");
+  }
+};
 
 exports.update = async (req, res) => {
   if (req && req.params && req.params.officer_id) {

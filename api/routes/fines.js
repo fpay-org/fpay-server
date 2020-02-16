@@ -16,6 +16,10 @@ router.post("/", handler.create);
 router.get("/driver/:nid", handler.getByDriver);
 router.get("/officer/:officer_id", handler.getByOfficer);
 router.post("/upload", upload.single("officer_image"), handler.upload);
-router.post("/uploadWithData", upload.single("officer_image"), handler.uploadWithData);
+router.post(
+  "/uploadWithData",
+  upload.single("officer_image"),
+  handler.uploadWithData
+);
 
 module.exports = router;

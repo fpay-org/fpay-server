@@ -1,8 +1,10 @@
-const express = require('express')
+const express = require("express");
 const router = express.Router();
 
-const handler = require('../handlers/officer');
+const handler = require("../handlers/officer");
 
+router.get("/", handler.getAll);
+router.get("/:officer_id", handler.getOne);
 router.post("/:officer_id", handler.update);
 router.post("/pass/:officer_id", handler.passUpdate);
 
