@@ -69,7 +69,6 @@ exports.update = async (req, res) => {
   }
 };
 
-
 exports.passUpdate = async (req, res) => {
   if (req && req.params && req.params.officer_id) {
     logger.info("Password update request for", req.params.officer_id);
@@ -86,22 +85,25 @@ exports.passUpdate = async (req, res) => {
 
             if (!result) return response(res, null, 401, "Invalid password");
             bcrypt.hash(req.body.new_password, 10, (err, hash) => {
-              if(err){
+              if (err) {
                 logger.error(err);
                 return response(res, null, 500, err);
               }
-            const updateDoc = {
-              password:hash
-            };
+              const updateDoc = {
+                password: hash
+              };
 
-            Officer.updateOne({ officer_id: req.params.officer_id }, updateDoc)
-              .exec()
-              .then(result => {
-                if (result) {
-                  response(res, null, 202, "User updated");
-                }
-              })
-              .catch(err => response(res, null, 500, err));
+              Officer.updateOne(
+                { officer_id: req.params.officer_id },
+                updateDoc
+              )
+                .exec()
+                .then(result => {
+                  if (result) {
+                    response(res, null, 202, "User updated");
+                  }
+                })
+                .catch(err => response(res, null, 500, err));
             });
           });
         } else {
@@ -113,5 +115,3 @@ exports.passUpdate = async (req, res) => {
     response(res, null, 404, "No officer id found");
   }
 };
-
-

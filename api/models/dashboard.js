@@ -28,11 +28,10 @@ const dashSchema = mongoose.Schema({
   image_url: {
     type: String
   },
-  isVerified:{
-    type:Boolean,
-    default:false,    
+  isVerified: {
+    type: Boolean,
+    default: false
   }
-  
 });
 
 module.exports = mongoose.model("Dashboard", dashSchema);

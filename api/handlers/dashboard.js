@@ -46,9 +46,6 @@ exports.getAll = async (req, res) => {
 
 //   const penalties = req.body.penalties.map(penalty => penalty.toString());
 
-
-
-
 exports.officerPost = async (req, res) => {
   logger.info("File:", req.file, "\nBody:", req.body);
 
@@ -100,9 +97,8 @@ exports.officerPost = async (req, res) => {
     location: req.body.location,
     image_url: req.body.image_url,
     posted_at: Date.now(),
-    isVerified: false,
+    isVerified: false
   });
-
 
   dashboard
     .save()
@@ -112,8 +108,6 @@ exports.officerPost = async (req, res) => {
     })
     .catch(err => response(res, null, 500, err));
 };
-
-
 
 // exports.upload = async (req, res) => {
 //   console.log(req.body);
