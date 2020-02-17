@@ -113,22 +113,6 @@ exports.officerLogin = async (req, res, next) => {
     });
 };
 
-exports.officerAvatar = async (req, res) => {
-  await storage.storeFile("officer_avatars", req.file, (err, url) => {
-    if (err) response(res, null, 500, err);
-
-    response(res, url, 201);
-  });
-};
-
-exports.officerRegWithImage = async (req, res) => {
-  await storage.storeFile("officer_avatars", req.file, (err, url) => {
-    if (err) response(res, null, 500, err);
-
-    response(res, url, 201);
-  });
-};
-
 /* Driver authentication */
 
 const Driver = require("../models/driver");
@@ -223,73 +207,6 @@ exports.driverAvatar = async (req, res) => {
   });
 };
 
-exports.driverRegWithImage = async (req, res) => {
-  await storage.storeFile("driver_avatars", req.file, (err, url) => {
-    if (err) response(res, null, 500, err);
-
-    Driver.find({ nid: req.body.nid })
-      .exec()
-      .then(driver => {
-        if (driver.length > 0)
-          return response(res, null, 409, "Driver already registered");
-
-        bcrypt.hash(req.body.password, 10, (err, hash) => {
-          if (err) {
-            logger.error(err);
-            return response(res, null, 500, err);
-          } else {
-            const driver = new Driver({
-              _id: new mongoose.Types.ObjectId(),
-              nid: req.body.nid,
-              password: hash,
-              first_name: req.body.first_name,
-              last_name: req.body.last_name,
-              fines: [],
-              vehicles: [],
-              contact_number: req.body.contact_number,
-              license_number: req.body.license_number,
-              avatar_url: url
-            });
-
-            driver
-              .save()
-              .then(result => {
-                logger.info("Driver created", result);
-                return response(res, result, 201, "Driver created");
-              })
-              .catch(error => {
-                logger.error(error);
-                return response(res, null, 500, error);
-              });
-          }
-        });
-      })
-      .catch(err => {
-        logger.error(err);
-        return response(res, null, 500, err);
-      });
-  });
-};
-
 exports.forgetPassword = async (req, res) => {
-  if (req && req.params && req.params.nid) {
-    Driver.findOne({ nid: req.params.nid })
-      .exec()
-      .then(driver => {
-        if (!!driver) {
-          const token = jwt.sign(
-            {
-              id: driver._id
-            },
-            data.JWT_SECRET,
-            {
-              expiresIn: "1h"
-            }
-          );
-        } else {
-          response(res, null, 404, "Invalid driver id");
-        }
-      })
-      .catch();
-  }
+  
 };

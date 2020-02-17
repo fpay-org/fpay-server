@@ -12,7 +12,6 @@ exports.get = async (req, res, next) => {
   const token = jwt.verify(req.query.token, data.JWT_SECRET);
 
   if (token.role == 0) {
-    // Handle driver
     const Driver = require("../models/driver");
 
     Driver.findById(token.id)
