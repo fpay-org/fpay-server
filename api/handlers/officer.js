@@ -1,6 +1,6 @@
 const Officer = require("../models/officer");
 const bcrypt = require("bcrypt");
-
+const storage = require("../services/storage");
 const response = require("../utils/response");
 const Logger = require("../utils/logger");
 const logger = new Logger();
@@ -113,5 +113,36 @@ exports.passUpdate = async (req, res) => {
       .catch(err => response(res, null, 500, err));
   } else {
     response(res, null, 404, "No officer id found");
+  }
+};
+
+exports.updateAvatar = async (req, res) => {
+  if (req && req.params && req.params.officer_id) {
+    logger.info("Avatar update for", req.params.officer_id);
+
+    Officer.findOne({ officer_id: req.params.officer_id })
+      .exec()
+      .then(async user => {
+        if (!!user) {
+          await storage.storeFile("officer_avatars", req.file, (err, url) => {
+            if (err) response(res, null, 500, err);
+
+            if (url) {
+              logger.info("URL");
+              const updateOfficer = {
+                avatar_url: url
+              };
+
+              Officer.updateOne({ officer_id: user.officer_id }, updateOfficer)
+                .exec()
+                .then(result => {
+                  if (result) response(res, null, 202, "Officer updated");
+                })
+                .catch(error => response(res, null, 500, error));
+            }
+          });
+        }
+      })
+      .catch(err => response(res, null, 500, err));
   }
 };
