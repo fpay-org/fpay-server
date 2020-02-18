@@ -100,7 +100,7 @@ exports.passUpdate = async (req, res) => {
                 .exec()
                 .then(result => {
                   if (result) {
-                    response(res, null, 202, "User updated");
+                    response(res, null, 202, "Password updated");
                   }
                 })
                 .catch(err => response(res, null, 500, err));
