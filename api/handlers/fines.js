@@ -17,8 +17,11 @@ const logger = new Logger();
 // Should paginate
 exports.getAll = async (req, res) => {
   Fine.find()
+    .sort({ issued_at: -1 })
     .exec()
-    .then(fines => response(res, fines))
+    .then(fines => {
+      response(res, fines);
+    })
     .catch(err => response(res, null, 500, err));
 };
 
@@ -162,6 +165,7 @@ exports.getByDriver = async (req, res) => {
       .then(user => {
         if (!!user) {
           Fine.find({ driver: user._id })
+            .sort({ issued_at: -1 })
             .exec()
             .then(docs => {
               response(res, docs);
@@ -184,6 +188,7 @@ exports.getByOfficer = async (req, res) => {
       .then(user => {
         if (!!user) {
           Fine.find({ officer: user._id })
+            .sort({ issued_at: -1 })
             .exec()
             .then(docs => {
               response(res, docs);
