@@ -29,19 +29,25 @@ exports.create = async (req, res) => {
   const officer_id = await Officer.findOne({ officer_id: req.body.officer })
     .exec()
     .then(officer => officer._id)
-    .catch(err => response(res, null, 500, err));
+    .catch(err => {
+      return response(res, null, 500, err);
+    });
 
   const secondary_officer_id = await Officer.findOne({
     officer_id: req.body.secondary_officer
   })
     .exec()
     .then(officer => officer._id)
-    .catch(err => response(res, null, 500, err));
+    .catch(err => {
+      return response(res, null, 500, err);
+    });
 
   const driver = await Driver.findOne({ nid: req.body.driver_nid })
     .exec()
     .then(driver => driver)
-    .catch(err => response(res, null, 500, err));
+    .catch(err => {
+      return response(res, null, 500, err);
+    });
 
   // Schedule location
 
@@ -55,9 +61,9 @@ exports.create = async (req, res) => {
     currency: req.body.currency,
     penalties: penalties,
     driver: driver._id,
+    location: req.body.location,
     officer: officer_id,
     secondary_officer: secondary_officer_id,
-    location: req.body.location,
     vehicle: req.body.vehicle_license_number,
     image_url: req.body.officer_avatar_url,
     issued_at: Date.now()
@@ -69,13 +75,15 @@ exports.create = async (req, res) => {
       logger.info("Fine issued", fine);
 
       sms.sendSMS(
-        `94${driver.contact_number}`,
+        `94719765040`,
         "A fine has been issued for this mobile number. Please use the FPAY driver application to pay the fine"
       );
 
-      response(res, null, 201);
+      return response(res, null, 201);
     })
-    .catch(err => response(res, null, 500, err));
+    .catch(err => {
+      return response(res, null, 500, err);
+    });
 };
 
 exports.upload = async (req, res) => {
@@ -152,7 +160,10 @@ exports.payFine = async (req, res) => {
           .then(result => {
             response(res, null, 200, "Fine Payed");
 
-            sms.sendSMS("940719765040", "Thank you for using FPAY to pay your fine")
+            sms.sendSMS(
+              "940719765040",
+              "Thank you for using FPAY to pay your fine"
+            );
           })
           .catch(error => response(res, null, 500, error));
       })

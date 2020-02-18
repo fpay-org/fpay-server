@@ -4,7 +4,7 @@ const fineSchema = mongoose.Schema({
   _id: mongoose.Schema.Types.ObjectId,
   total_value: { type: Number, required: true },
   currency: { type: String, required: true, default: "lkr" },
-  penalties: { type: Array, required: true },
+  penalties: { type: Array, required: false },
   driver: { type: mongoose.Types.ObjectId, ref: "Driver", required: true },
   officer: { type: mongoose.Types.ObjectId, ref: "Officer", required: true },
   secondary_officer: {
@@ -13,9 +13,9 @@ const fineSchema = mongoose.Schema({
     required: true
   },
   location: {
-    name: { type: String, required: true },
-    longitude: { type: String, required: true },
-    latitude: { type: String, required: true }
+    name: { type: String, required: false },
+    longitude: { type: String, required: false },
+    latitude: { type: String, required: false }
   },
   vehicle: { type: String, required: true },
   image_url: {
