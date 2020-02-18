@@ -54,7 +54,20 @@ exports.officerReg = async (req, res, next) => {
             .save()
             .then(result => {
               logger.info("Officer created", result);
-              return response(res, result, 201, "Officer created");
+              const token = jwt.sign(
+                {
+                  id: result._id,
+                  officerID: result.officer_id,
+                  first_name: result.first_name,
+                  role: 1
+                },
+                data.JWT_SECRET,
+                {
+                  //expiresIn: "1h"
+                }
+              );
+
+              return response(res, token, 201, "Officer created");
             })
             .catch(error => {
               logger.error(error);
@@ -207,6 +220,4 @@ exports.driverAvatar = async (req, res) => {
   });
 };
 
-exports.forgetPassword = async (req, res) => {
-  
-};
+exports.forgetPassword = async (req, res) => {};
