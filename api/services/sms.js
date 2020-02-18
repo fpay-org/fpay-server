@@ -2,8 +2,8 @@ const axios = require("axios");
 
 exports.sendSMS = (to, body) => {
   const request = {
-    user_id: "11394",
-    api_key: "pZKXbn800LuqIsjHUPzE",
+    user_id: "11398",
+    api_key: "QWaA8zu1lO0iGQw3lKu3",
     sender_id: "NotifyDEMO",
     to: to,
     message: body
