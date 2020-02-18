@@ -42,9 +42,9 @@ exports.create = async (req, res) => {
       return response(res, null, 500, err);
     });
 
-  const driver = await Driver.findOne({ nid: req.body.driver_nid })
+  const driver_id = await Driver.findOne({ nid: req.body.driver_nid })
     .exec()
-    .then(driver => driver)
+    .then(driver => driver._id)
     .catch(err => {
       return response(res, null, 500, err);
     });
@@ -60,7 +60,7 @@ exports.create = async (req, res) => {
     total_value: req.body.total_value,
     currency: req.body.currency,
     penalties: penalties,
-    driver: driver._id,
+    driver: driver_id,
     location: req.body.location,
     officer: officer_id,
     secondary_officer: secondary_officer_id,
