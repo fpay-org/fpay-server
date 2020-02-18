@@ -84,3 +84,28 @@ exports.updateAvatar = async (req, res) => {
       .catch(err => response(res, null, 500, err));
   }
 };
+
+exports.delete = async (req, res) => {
+  if (req && req.params && req.params.nid) {
+    logger.info("Delete request for", req.params.nid);
+
+    Driver.findOne({ nid: req.params.nid })
+      .exec()
+      .then(user => {
+        if (!!user) {
+          Driver.deleteOne({ nid: req.params.nid })
+            .exec()
+            .then(res => response(res, null, 200, "Driver deleted"))
+            .catch(err => {
+              logger.error(err);
+              return response(res, null, 500, err);
+            });
+        } else {
+          response(res, null, 404, "Invalid driver id");
+        }
+      })
+      .catch(err => response(res, null, 500, err));
+  } else {
+    response(res, null, 404, "No driver id found");
+  }
+};
