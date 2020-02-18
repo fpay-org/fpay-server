@@ -14,6 +14,7 @@ const handler = require("../handlers/fines");
 router.get("/", handler.getAll);
 router.post("/", handler.create);
 router.get("/driver/:nid", handler.getByDriver);
+router.get("/:fine_id/pay", handler.payFine);
 router.get("/officer/:officer_id", handler.getByOfficer);
 router.post("/upload", upload.single("officer_image"), handler.upload);
 router.post(

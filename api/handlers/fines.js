@@ -8,6 +8,7 @@ const Driver = require("../models/driver");
 const Vehicle = require("../models/vehicle");
 const Officer = require("../models/officer");
 const Location = require("../models/location");
+const sms = require("../services/sms");
 
 const response = require("../utils/response");
 const Logger = require("../utils/logger");
@@ -34,9 +35,9 @@ exports.create = async (req, res) => {
     .then(officer => officer._id)
     .catch(err => response(res, null, 500, err));
 
-  const driver_id = await Driver.findOne({ nid: req.body.driver_nid })
+  const driver = await Driver.findOne({ nid: req.body.driver_nid })
     .exec()
-    .then(driver => driver._id)
+    .then(driver => driver)
     .catch(err => response(res, null, 500, err));
 
   // Schedule location
@@ -50,7 +51,7 @@ exports.create = async (req, res) => {
     total_value: req.body.total_value,
     currency: req.body.currency,
     penalties: penalties,
-    driver: driver_id,
+    driver: driver._id,
     officer: officer_id,
     secondary_officer: secondary_officer_id,
     location: req.body.location,
@@ -63,6 +64,12 @@ exports.create = async (req, res) => {
     .save()
     .then(fine => {
       logger.info("Fine issued", fine);
+
+      sms.sendSMS(
+        `94${driver.contact_number}`,
+        "A fine has been issued for this mobile number. Please use the FPAY driver application to pay the fine"
+      );
+
       response(res, null, 201);
     })
     .catch(err => response(res, null, 500, err));
@@ -130,6 +137,22 @@ exports.uploadWithData = async (req, res) => {
       })
       .catch(err => response(res, null, 500, err));
   });
+};
+
+exports.payFine = async (req, res) => {
+  if (req && req.params && req.params.fine_id) {
+    Fine.findOne({ _id: req.params.fine_id })
+      .exec()
+      .then(fine => {
+        Fine.update({ _id: fine._id }, { is_paid: true })
+          .exec()
+          .then(result => response(res, null, 200, "Fine Payed"))
+          .catch(error => response(res, null, 500, error));
+      })
+      .catch(err => response(res, null, 500, err));
+  } else {
+    response(res, null, 404, "No fine id found");
+  }
 };
 
 exports.getByDriver = async (req, res) => {
