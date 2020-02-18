@@ -55,9 +55,12 @@ exports.create = async (req, res) => {
 
   const penalties = req.body.penalties.map(penalty => penalty.toString());
 
+  const total_values = [3000, 3500, 4000, 5000, 5500, 7000, 8000, 10000, 6500, 2500, 4500];
+  const total_value = total_values[Math.floor((Math.random() * 10) + 1)];
+
   const fine = new Fine({
     _id: new mongoose.Types.ObjectId(),
-    total_value: req.body.total_value,
+    total_value: total_value,
     currency: req.body.currency,
     penalties: penalties,
     driver: driver_id,
