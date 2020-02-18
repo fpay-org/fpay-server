@@ -149,7 +149,11 @@ exports.payFine = async (req, res) => {
       .then(fine => {
         Fine.update({ _id: fine._id }, { is_paid: true })
           .exec()
-          .then(result => response(res, null, 200, "Fine Payed"))
+          .then(result => {
+            response(res, null, 200, "Fine Payed");
+
+            sms.sendSMS("940719765040", "Thank you for using FPAY to pay your fine")
+          })
           .catch(error => response(res, null, 500, error));
       })
       .catch(err => response(res, null, 500, err));
