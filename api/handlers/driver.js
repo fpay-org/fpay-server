@@ -5,12 +5,24 @@ const Logger = require("../utils/logger");
 const storage = require("../services/storage");
 const logger = new Logger();
 
+/**
+ * Return all drivers
+ * @param {string} null
+ * @return {Json} 200: all drivers
+ */
+
 exports.getAll = async (req, res) => {
   Driver.find()
     .exec()
     .then(drivers => response(res, drivers))
     .catch(err => response(res, null, 500, err));
 };
+
+/**
+ * Return single driver
+ * @param {string} driver_nid: driver nid
+ * @return {Json} 200: single fine
+ */
 
 exports.getOne = async (req, res) => {
   if (req && req.params && req.params.nid) {
@@ -30,6 +42,12 @@ exports.getOne = async (req, res) => {
     response(res, null, 404, "No driver id found");
   }
 };
+
+/**
+ * Update driver
+ * @param {string} driver_nid: driver nid
+ * @return {Json} 202: updates
+ */
 
 exports.update = async (req, res) => {
   if (req && req.params && req.params.nid) {
@@ -52,8 +70,16 @@ exports.update = async (req, res) => {
       .catch(err => response(res, null, 500, err));
   } else {
     response(res, null, 404, "No driver id found");
+
+    done();
   }
 };
+
+/**
+ * Update avatar
+ * @param {file} file: driver avatar
+ * @return {string} 200: success
+ */
 
 exports.updateAvatar = async (req, res) => {
   if (req && req.params && req.params.nid) {
@@ -84,6 +110,12 @@ exports.updateAvatar = async (req, res) => {
       .catch(err => response(res, null, 500, err));
   }
 };
+
+/**
+ * Delete driver
+ * @param {string} driver_nid: driver nid
+ * @return {string} 200: delete
+ */
 
 exports.delete = async (req, res) => {
   if (req && req.params && req.params.nid) {

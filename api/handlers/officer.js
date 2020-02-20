@@ -5,12 +5,24 @@ const response = require("../utils/response");
 const Logger = require("../utils/logger");
 const logger = new Logger();
 
+/**
+ * Return all officers
+ * @param {string} null
+ * @return {Json} 200: all officers
+ */
+
 exports.getAll = async (req, res) => {
   Officer.find()
     .exec()
     .then(officers => response(res, officers))
     .catch(err => response(res, null, 500, err));
 };
+
+/**
+ * Return single officer
+ * @param {string} null
+ * @return {Json} 200: single officer
+ */
 
 exports.getOne = async (req, res) => {
   logger.info("Req ");
@@ -28,6 +40,12 @@ exports.getOne = async (req, res) => {
     response(res, null, 404, "No driver id found");
   }
 };
+
+/**
+ * Update officer
+ * @param {string} officer_id: driver id
+ * @return {Json} 202: updates
+ */
 
 exports.update = async (req, res) => {
   if (req && req.params && req.params.officer_id) {
@@ -115,6 +133,12 @@ exports.passUpdate = async (req, res) => {
     response(res, null, 404, "No officer id found");
   }
 };
+
+/**
+ * Update avatar
+ * @param {file} file: officer avatar
+ * @return {string} 200: success
+ */
 
 exports.updateAvatar = async (req, res) => {
   if (req && req.params && req.params.officer_id) {

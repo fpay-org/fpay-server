@@ -42,9 +42,9 @@ exports.create = async (req, res) => {
       return response(res, null, 500, err);
     });
 
-  const driver_id = await Driver.findOne({ nid: req.body.driver_nid })
+  const driver = await Driver.findOne({ nid: req.body.driver_nid })
     .exec()
-    .then(driver => driver._id)
+    .then(driver => driver)
     .catch(err => {
       return response(res, null, 500, err);
     });
@@ -55,15 +55,12 @@ exports.create = async (req, res) => {
 
   const penalties = req.body.penalties.map(penalty => penalty.toString());
 
-  const total_values = [3000, 3500, 4000, 5000, 5500, 7000, 8000, 10000, 6500, 2500, 4500];
-  const total_value = total_values[Math.floor((Math.random() * 10) + 1)];
-
   const fine = new Fine({
     _id: new mongoose.Types.ObjectId(),
-    total_value: total_value,
+    total_value: req.body.total_value,
     currency: req.body.currency,
     penalties: penalties,
-    driver: driver_id,
+    driver: driver._id,
     location: req.body.location,
     officer: officer_id,
     secondary_officer: secondary_officer_id,
@@ -78,7 +75,7 @@ exports.create = async (req, res) => {
       logger.info("Fine issued", fine);
 
       sms.sendSMS(
-        `94719765040`,
+        driver.contact_number,
         "A fine has been issued for this mobile number. Please use the FPAY driver application to pay the fine"
       );
 

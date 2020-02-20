@@ -13,6 +13,12 @@ const response = require("../utils/response");
 
 const Officer = require("../models/officer");
 
+/**
+ * Return new user token
+ * @param {string} Officer: update officer object
+ * @return {string} 200: Success
+ */
+
 exports.updateOfficer = async (req, res, next) => {
   if (req && req.params && req.params.officer_id) {
     logger.info("Update request for", req.params.officer_id);

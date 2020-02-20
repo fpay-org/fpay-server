@@ -8,6 +8,12 @@ const response = require("../utils/response");
 const Logger = require("../utils/logger");
 const logger = new Logger();
 
+/**
+ * Return authorized user data
+ * @param {string} token: token
+ * @return {Json} 200: Success
+ */
+
 exports.get = async (req, res, next) => {
   const token = jwt.verify(req.query.token, data.JWT_SECRET);
 
