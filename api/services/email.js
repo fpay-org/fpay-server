@@ -1,35 +1,37 @@
-const config = require("../config/data");
-const mailjet = require('node-mailjet')
-    .connect(config.EMAIL.API_KEY, config.EMAIL.SCERET_KEY)
+const nodemailer = require("nodemailer");
+const config = require("../config/index");
 
-exports.sendEmail = (email, name, subject, body) => {
+exports.sendMail = (to, subject, body) => {
+  nodemailer.createTestAccount((err, account) => {
+    let transporter = nodemailer.createTransport({
+      host: config.smtp.host,
+      port: config.smtp.port,
+      secure: config.smtp.secure,
+      auth: {
+        user: config.smtp.user,
+        pass: config.smtp.pass
+      }
+    });
 
-    const request = mailjet
-        .post("send", { 'version': 'v3.1' })
-        .request({
-            "Messages": [
-                {
-                    "From": {
-                        "Email": "hi@sashika.me",
-                        "Name": "My"
-                    },
-                    "To": [
-                        {
-                            "Email": email,
-                            "Name": name
-                        }
-                    ],
-                    "Subject": subject,
-                    "TextPart": body
-                }
-            ]
-        })
-    request
-        .then((result) => {
-            console.log(result.body)
-        })
-        .catch((err) => {
-            console.log(err)
-        })
+    var recepients = "";
+    for (let i = 0; i < to.length - 1; i++) {
+      recepients += to[i] + ", ";
+    }
+    recepients += to[to.length - 1];
+    console.log(recepients);
 
-}
+    let mailOptions = {
+      from: '"Fpay" <' + config.smtp.user + "> ",
+      to: recepients,
+      subject: subject,
+      text: body
+    };
+
+    transporter.sendMail(mailOptions, (error, info) => {
+      if (error) {
+        return console.log(error);
+      }
+      console.log("Message sent: %s", info.messageId);
+    });
+  });
+};

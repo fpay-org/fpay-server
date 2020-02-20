@@ -17,8 +17,7 @@ const Officer = require("../models/officer");
 
 /**
  * Return new user token
- * @param {string} officerID: new officer's ID
- * @param {string} password: new officer's password
+ * @param {string} Officer: new officer object
  * @return {string} 201: Token
  */
 
@@ -82,6 +81,14 @@ exports.officerReg = async (req, res, next) => {
     });
 };
 
+
+/**
+ * Return new user token
+ * @param {string} officerID: officer's ID
+ * @param {string} password: officer's password
+ * @return {string} 201: Token
+ */
+
 exports.officerLogin = async (req, res, next) => {
   Officer.find({ officer_id: req.query.officer_id })
     .exec()
@@ -130,6 +137,13 @@ exports.officerLogin = async (req, res, next) => {
 
 const Driver = require("../models/driver");
 
+
+/**
+ * Return new user token
+ * @param {string} Driver: new driver object
+ * @return {string} 201: Token
+ */
+
 exports.driverReg = async (req, res, next) => {
   Driver.find({ nid: req.body.nid })
     .exec()
@@ -174,6 +188,14 @@ exports.driverReg = async (req, res, next) => {
     });
 };
 
+
+/**
+ * Return new user token
+ * @param {string} officer_nid: new officer's nid
+ * @param {string} password: new officer's password
+ * @return {string} 201: Token
+ */
+
 exports.driverLogin = async (req, res, next) => {
   Driver.find({ nid: req.query.nid })
     .exec()
@@ -211,6 +233,13 @@ exports.driverLogin = async (req, res, next) => {
       return response(res, null, 500, err);
     });
 };
+
+
+/**
+ * Return new user token
+ * @param {file} file: officer avatar
+ * @return {string} 200: Success
+ */
 
 exports.driverAvatar = async (req, res) => {
   await storage.storeFile("driver_avatars", req.file, (err, url) => {

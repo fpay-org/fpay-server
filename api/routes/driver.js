@@ -19,5 +19,6 @@ router.post(
   upload.single("driver_image"),
   handler.updateAvatar
 );
+router.get("/:nid/delete", handler.delete);
 
 module.exports = router;
